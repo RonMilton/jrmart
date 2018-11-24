@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/scripts/js/instafeed.min.js"></script>
+  
+  <link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans: 300,400" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container-fluid">
+
+    <header>
+      <div class="row">
+        <div class="col-2">
+            <p><a href="/">joyce roland malatek</a></p>
+        </div>
+        <div class="col-8">
+          <ul id="nav" class="list-inline">
+            <li class="list-inline-item"><a href="/">gallery</a></li>
+            <li class="list-inline-item"><a href="/about/">about</a></li>
+            <li class="list-inline-item"><a href="/commission/">commission</a></li>
+            <!--<li class="list-inline-item"><a href="/contact/">contact</a></li>-->
+          </ul>
+        </div>
+        <div class="col-2">
+          <a href="https://www.instagram.com/{{ instagram }}/"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="row justify-content-start">
+        <div id="quotecol" class="col-2"></div>
+        <div id="centermass" class="col-8">
+          <h1>{{ title }}</h1>
+
+          {{{ contents }}}
+
+          <div class="modal fade" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">gallery</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div id="carouselExampleControls" class="carousel slide carousel-fade" data-ride="carousel">
+                          <div class="carousel-inner"></div>
+                          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="row">
+        <div class="col-12">
+          <p>&copy; <script>document.write((new Date).getFullYear());</script> | Joyce Roland-Malatek</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="text/javascript">
+    if ($('ul#gallery').length > 0) {
+      console.log("Gallery found");
+      var token = '9398496578.996621c.3c9ad8e52aa94525a91d1c91f02e1f78',
+          userid = 9398496578
+      $.ajax({
+        url: 'https://api.instagram.com/v1/tags/portfolio/media/recent?access_token=' + token,
+        dataType: 'jsonp',
+        type: 'GET',
+        data: {access_token: token},
+        success: function(data){
+          console.log(data);
+          for( x in data.data ){
+            $('ul#gallery').append('<li class="list-inline-item"><a href="#" class="gallery-item"><img src="'+data.data[x].images.thumbnail.url+'"></a></li>'); 
+            $('.carousel-inner').append('<div class="carousel-item"><img class="d-block w-100" src="' + data.data[x].images.standard_resolution.url + '" alt="Slide ' + x + '"></div>')
+            // data.data[x].images.low_resolution.url - URL of image, 306х306
+            // data.data[x].images.thumbnail.url - URL of image 150х150
+            // data.data[x].images.standard_resolution.url - URL of image 612х612
+            // data.data[x].link - Instagram post URL 
+          }
+        },
+        error: function(data){
+          console.log(data); // send the error notifications to console
+        }
+      }).done(function(data){
+        $('a.gallery-item').click(function(e){
+            e.preventDefault();
+            $('.modal').modal();
+            $('.carousel-inner').children('div').eq($(this).parent().index()).addClass('active');
+        });
+        $('.modal').on('hidden.bs.modal', function (e) {
+          $('div.active').removeClass('active');
+        });
+      });
+    }
+    if ($('#quote').length > 0){
+      $('#quote').detach().appendTo('#quotecol').removeClass('d-none');
+    }
+    var currentpage = location.href.replace(location.origin, "").replace("index.html", "");
+    switch (currentpage){
+      case "/":
+        console.log('gallery');
+        $("ul#nav li a:contains('gallery')").addClass('active').removeAttr('href');
+        break;
+      case "/contact/":
+        console.log('contact');
+        $("ul#nav li a:contains('contact')").addClass('active').removeAttr('href');
+        break;
+      case "/commission/":
+        console.log('commission');
+        $("ul#nav li a:contains('commission')").addClass('active').removeAttr('href');
+        break;
+      case "/about/":
+        console.log('about');
+        $("ul#nav li a:contains('about')").addClass('active').removeAttr('href');
+        break;
+      default:
+        console.log(currentpage + " not found.")
+    }
+    
+</script>
+
+</body>
+</html>

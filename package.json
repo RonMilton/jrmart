@@ -1,0 +1,20 @@
+{
+  "name": "joycerolandmalatek",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "express": "^4.16.4",
+    "handlebars": "^4.0.5",
+    "metalsmith": "^2.1.0",
+    "metalsmith-assets": "^0.1.0",
+    "metalsmith-include-content": "^1.0.1",
+    "metalsmith-layouts": "^1.4.1",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-partial": "^0.1.0",
+    "metalsmith-permalinks": "^0.5.0",
+    "metalsmith-project-images": "^1.1.2",
+    "metalsmith-sass": "^1.5.1",
+    "metalsmith-serve": "0.0.7",
+    "metalsmith-watch": "^1.0.3"
+  }
+}
