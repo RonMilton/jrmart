@@ -31,6 +31,10 @@ Metalsmith(__dirname)
     source: './src/assets/images',
     destination: './images'
   }))
+  .use(assets({
+    source: './src/assets/js',
+    destination: './js'
+  }))
   .use(watch({}))
   .build(function(err, files) {
     if (err) { throw err; }
