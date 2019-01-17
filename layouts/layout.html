@@ -93,7 +93,7 @@
       var token = '9398496578.996621c.3c9ad8e52aa94525a91d1c91f02e1f78',
           userid = 9398496578
       $.ajax({
-        url: 'https://api.instagram.com/v1/tags/portfolio/media/recent?access_token=' + token,
+        url: 'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + token,
         dataType: 'jsonp',
         type: 'GET',
         data: {access_token: token},
