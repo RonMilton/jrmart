@@ -39,11 +39,17 @@ header{
   li {
     padding: $spacer;
     margin-bottom: map-get($spacers, 2);
+    max-width: 30%;
+  }
+  img {
+    max-width: 100%;
   }
 }
 #quote {
   font-size: .7rem;
   padding-top: 6rem;
+  position: sticky;
+  top: -5rem;
 }
 #centermass {
   h1{
